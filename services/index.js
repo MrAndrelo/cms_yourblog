@@ -7,7 +7,16 @@ export const getPosts = async () => {
     query MyQuery {
       postsConnection {
         edges {
+          cursor
           node {
+            author {
+              id
+              name
+              bio
+              photo {
+                url
+              }
+            }
             createdAt
             slug
             title
@@ -19,21 +28,12 @@ export const getPosts = async () => {
               name
               slug
             }
-            authors {
-              id
-              name
-              bio
-              photo {
-                url
-              }
-            }
           }
-          cursor
         }
       }
     }
   `;
-  const result = await request(graphqlAPI, query);
+  const result = await request(graphqlAPI, query, {});
 
   return result.postsConnection.edges;
 };
